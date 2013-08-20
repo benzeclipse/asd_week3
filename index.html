@@ -1,0 +1,234 @@
+<!-- ASDI
+ Term 1308
+ Banchop Ben Kangdouangnhot
+ Project 2 -->
+<!doctype html>  
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	
+	<title>Ticket Hub</title>
+	
+	<!--  Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="HandheldFriendly" content="True"/>
+	<meta name="MobileOptimized" content="320"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!-- Mobile IE needs ClearType for smoothing fonts -->
+	<meta http-equiv="cleartype" content="on" />
+	
+	<!-- StyleSheets under here -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+<!--	<link rel="stylesheet" href="css/style.css" /> 
+		<link rel="stylesheet" href="css/stylesVfw.css" /> 
+-->	
+	
+	<!-- JavaScript is normally at the end of the body, except for Modernizr which enables HTML5 elements & feature detects -->
+	<script src="js/libs/modernizr.custom.min.js"></script>
+	
+	 <!-- class for resizing images -->
+	<style>
+		img.fullscreen {
+			max-height: 100%;
+			max-width: 100%;
+		}
+	</style>
+  </head>
+<body>
+
+
+	<!-- Home Page -->
+		<div data-role="page" id="homes">
+			<div data-role="header" data-position="fixed">
+				<h1>TicketSales</h1>
+			</div>	
+			
+				<p align="center">
+					Buy, sell, and Trade now... Click on link below!
+				</p>
+			
+			
+				<ul data-role="listview"  data-theme="e" >
+		 			<li>
+		 				<a href="#testform"><img src="images/nba.jpg"/></a>
+		 				<!-- <a href="add.html" data-ajax="false"  > -->
+		 			    <p style="color: black" align="center"><br><b>SELL NOW!</b></br></p>
+		 			    <p style="color: black" align="center"><b>TRADE NOW!</b></p>
+		 			    <p style="color: red" align="center"><b>CLICK HERE!</b></p>
+		 			    </a>
+		 			</li>
+				</ul>
+
+						
+			<!-- Adding nicer grids 	-->
+			<div class="ui-grid-a" >
+			
+				<div class="ui-block-a" >
+					<a href="#errors"><img src="images/mlb.jpg"/></a>
+					<div class="homegrid"></div>
+				</div>	
+				
+				<div class="ui-block-b" >
+					<a href="#errors"><img src="images/nba.jpg"/></a>
+					<div class="homegrid"></div>
+				</div>	
+					<div class="ui-block-a" >
+						<a href="#errors"><img src="images/nfl.jpeg"/></a>
+						<div class="homegrid"></div>
+					</div>
+						
+					<div class="ui-block-b" >
+						<a href="#errors"><img src="images/contact.jpeg"/></a>
+						<div class="homegrid"></div>
+					</div>	
+					
+			</div>
+			
+			<style>
+				.ui-grid-a img{
+					width: 100%;
+					height: auto;
+					margin: 0px;
+			}
+			.ui-grid-a div{
+				padding:3px;
+			}
+			.homegrid{
+				width:100:
+				text-align:center;
+				font-size:12px;
+				margin-top:-5px;
+			}
+			</style> 	
+
+	
+			 <div data-role="footer" data-position="fixed">
+      	 		 <div data-role="navbar">
+         	  		 <ul>
+              	  		 <li><a href="#homes" data-icon="home" class="ui-btn-active">Home</a></li>
+               			 <li><a href="#errors" data-icon="gear">About Us</a></li>
+           			 </ul>
+       			 </div> <!--navbar -->
+			 </div> <!--footer -->  
+			
+	   </div>	
+			
+	<!-- error page -->   
+	<div data-role="page" id="errors" data-id="displayingData" > 
+		<div data-role="header" data-position="fixed" data-theme="b" >
+			
+			 <h1 style="text-align:left; margin-left:10px;">TicketSale</h1><a href=""  data-rel="back" data-icon="arrow-l" class="ui-btn-right">Back</a>
+		</div>
+
+			<div><p align="center">Under Construction....</p></div>
+		
+		
+  		 <div data-role="footer" data-position="fixed">
+      	 	 <div data-role="navbar">
+         	  	 <ul>
+              	  	 <li><a href="#homes" data-icon="home" class="ui-btn-active">Home</a></li>
+               		 <li><a href="#errors" data-icon="gear">About Us</a></li>
+           		 </ul>
+       		 </div><!-- /navbar -->
+		</div><!-- /footer -->   
+	</div> 
+
+
+	
+	<div id="testform" data-role="page">
+	
+
+
+		<div data-role="header" data-position="fixed" data-theme="">
+			<h2>TicketSales</h2>
+		</div>
+		
+			
+	
+
+		
+
+			<form action="#" id="tick">
+					<div data-role="fieldcontain">
+					
+						<div>
+							<label for="fullname">Fullname:</label>
+							<input type="text" name="fullname" id="fullname"/>
+						</div>
+					
+						<div>
+							<label for="email">Email:</label>
+							<input type="text" name="email" id="email"/>
+						</div>
+							
+						<div>
+							<label for="concerns">Concerns:</label>
+							<textarea id="concerns"></textarea>
+						</div>
+							
+					</div>
+					
+					
+					<div id="button">
+						<input id="submit" class="update" type="button" value="Save"  data-theme="e"/>
+					</div>	
+
+				<div data-role="fieldcontain">
+					<br><a id="displayData" href="#">Show Info</a></br>
+					<br><a id="clearLocal" href="#">Clear Data</a></br>
+					<br><a id="refresh" href="#">Refresh</a></br>
+				</div>
+		</form>
+
+				<!-- JSON/XML Buttons   -->		
+				<div data-role="fieldcontain" id="jason" > 
+					<p><input type="submit" id="getJson" value="JSON"  data-theme="b" data-inline="true"/>
+					<a href="#" id="xml" data-role="button" data-inline="true" data-theme="b">XML</a>	
+					</p>
+				</div>
+		
+		<section id="xmllist">	
+		</section>	
+		<section id="jsonlist">	
+		</section>
+				
+		<div data-role="footer" data-position="fixed">
+      	 	 <div data-role="navbar">
+         	  	 <ul>
+              	  	 <li><a href="#homes" data-icon="home" class="ui-btn-active">Home</a></li>
+               		 <li><a href="#errors" data-icon="gear">About Us</a></li>
+           		 </ul>
+       		 </div><!-- /navbar -->
+		</div><!-- /footer -->   
+		 		
+	</div>
+	
+
+	<!-- pop up 'Error' dialog-->   
+	<div data-role="dialog" id="formErrors" > 
+		<div data-role="header" data-position="fixed" data-theme="b" >
+			<h1>Missing fields</h1>
+		</div>		
+		<div data-role="content">	
+			<ul>
+				<li>Test.</li>
+			</ul>		
+		</div>		
+	</div>		
+	
+</div>
+
+
+	<!-- JavaScript under here -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+	<script type="text/javascript" src="js/libs/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="json.json"></script>
+	
+
+
+</body>
+</html>
