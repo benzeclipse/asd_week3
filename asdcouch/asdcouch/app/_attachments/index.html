@@ -8,7 +8,7 @@
 
 	<meta charset="utf-8">
 	
-	<title>Ticket Hub</title>
+	<title>TicketSale</title>
 	
 	<!--  Mobile viewport optimized: j.mp/bplateviewport -->
 	<meta name="HandheldFriendly" content="True"/>
@@ -25,7 +25,7 @@
 -->	
 	
 	<!-- JavaScript is normally at the end of the body, except for Modernizr which enables HTML5 elements & feature detects -->
-	<script src="js/libs/modernizr.custom.min.js"></script>
+  	<script src="modernizr.custom.min.js"></script>
 	
 	 <!-- class for resizing images -->
 	<style>
@@ -36,6 +36,7 @@
 	</style>
   </head>
 <body>
+
 
 	<!-- Home Page -->
 		<div data-role="page" id="homes">
@@ -133,18 +134,11 @@
 
 	
 	<div id="testform" data-role="page">
-	
-
 
 		<div data-role="header" data-position="fixed" data-theme="">
 			<h2>TicketSales</h2>
 		</div>
-		
-			
 	
-
-		
-
 			<form action="#" id="tick">
 					<div data-role="fieldcontain">
 					
@@ -179,6 +173,7 @@
 
 				<!-- JSON/XML Buttons   -->		
 				<div data-role="fieldcontain" id="jason" > 
+			<!--	<p><input type="submit" id="getJson" value="JSON"  data-theme="b" data-inline="true"/>   -->
 					<p><input type="submit" id="getJson" value="JSON"  data-theme="b" data-inline="true"/>
 					<a href="#" id="xml" data-role="button" data-inline="true" data-theme="b">XML</a>	
 					</p>
@@ -218,11 +213,10 @@
 
 	<!-- JavaScript under here -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-	<script type="text/javascript" src="js/libs/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="json.json"></script>
+	<script type="text/javascript" src="main.js"></script>
+	
 	
 
 
