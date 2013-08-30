@@ -1,198 +1,160 @@
-// ASDI
 
-// Term 1308
-// Banchop Ben Kangdouangnhot
+$('#home').on('pageinit', function(){
+	//code needed for home page goes here
+});
 
-
-	//Json
-	$("#getJson").on("click", function(){
-		$("#jsonlist").empty();
-		$('<h1 style="color: blue"> Json Lists </h1>').appendTo("#jsonlist");
-		$.ajax({
-			url: "json.json",
-			type: "GET",
-			dataType: "json",
-			success: function(data){
-				for(var i=0, j=data.jsontickets.length; i<j; i++){
-					var obj = data.jsontickets[i];
-					$('<li class="ui-li ui-li-static ui-btn-up-c ui-first-child ui-last-child">' +
-					  '<h3 class="ui-li-heading">' + obj.Nfl +'</h3>' +
-					  '<p class="ui-li-desc">' + 'VS: ' + obj.versus + '</p>' +
-					  '<p class="ui-li-desc">' + 'Location: ' + obj.local + '</p>' +
-					  '</li>').appendTo("#jsonlist");
-				}
-			},
-			error: function(error){
-			}
-		});
-	
-	});
-
-	
-
-
-	//Get XML
-	$("#xml").on("click", function(){
-		$("#xmllist").empty();
-		$('<h1 style="color: blue" > XML Lists </h1>').appendTo("#xmllist");
-		$.ajax({
-			url: "ticket_catalog.xml",
-			type: "GET",
-			dataType: "xml",
-			success: function(data){
-				$(data).find("TK").each(function() {
-					$('<li class="ui-li ui-li-static ui-btn-up-c ui-first-child ui-last-child">' +
-					  '<h3 class="ui-li-heading">' + $(this).find('TEAMS').text() +'</h3>' +
-					  '<p class="ui-li-desc">' + 'Tickets found: Qty ' + $(this).find('TICKETS').text() + '</p>' +
-					    '</li>').appendTo("#xmllist");
-				});
-			},
-			error: function(error){
-				console.log("Error:" + error + "\n" + "Parse Error: ");
-			}
-		});
-	});
-
-
-// jQuery refactoring form
-$('#testform').on('pageinit', function() {
-
-// Storing DATA
-function storeData() {
-
-	var id 					= Math.floor(Math.random()* 100000001);
-
-	var item 				={};
-	
-		item.fullname  		=['Name:', $('#fullname').val()];
-		item.email			=['Email:', $('#email').val()];
-		item.concerns		=['Concerns:', $('#concerns').val()];
-		
-	localStorage.setItem(id, JSON.stringify(item));
-	alert('contact saved!');
-}
-
-// Getting DATA
-function getData() {
-
-	if(localStorage.length === 0) {
-		alert("Local Storage empty...");
-		
-		
-	}
-	
-	var makeDiv = $('<div></div>');
-	makeDiv.attr("id", "items");
-	makeDiv.attr("data-role","fieldcontain");
-	var makeList = $('<ul></ul>');
-	makeDiv.append(makeList);
-	$('#testform').append(makeDiv);
-	$('#clearLocal').css('display', 'inline');
-	for(var i=0, len=localStorage.length; i<len; i++) {
-		var makeLi = $('<li></li>');
-		var linksLi = $('<li></li>');
-		makeList.append(makeLi);
-		var key = localStorage.key(i);
-		var value = localStorage.getItem(key);
-		var obj = JSON.parse(value);
-		var makeSubList = $('<ul></ul>');
-		makeLi.append(makeSubList);
-		for(var n in obj) {
-			var makeSubLi = $('<li></li>');
-			makeSubList.append(makeSubLi);
-			var optSubText = obj[n][0]+ " "+obj[n][1];
-			makeSubLi.html(optSubText);
-			makeSubList.append(linksLi);
+$('#addItem').on('pageinit', function(){
+	//delete $.validator.methods.date;
+	var myForm = $('#addForm');
+	myForm.validate({
+		invalidHandler: function(form, validator) {
+		},
+		submitHandler: function() {
+			var data = myForm.serializeArray();
+			storeData(data);
+			getDatas();
 		}
-		makeItemLinks(localStorage.key(i),linksLi);
-	}
-}
+
+		});
+});
 
 
-//Edit and delete
-function makeItemLinks(key, linksLi) {
-	var editLink = $('<a></a>');
-	editLink.attr("href", "#");
-	editLink.key = key;
-	var editText = "Edit Info";
-	$(editLink).click(function() {
-		editItem(key);
-		$('#displayData').css('display', 'none');
-	});
-	editLink.html(editText);
-	linksLi.append(editLink);
+$('#displays').on('pageshow', function(){
+	//getDatas();
+	addTask();
+});
 
-	var breakTag = $('<br/>');
-	linksLi.append(breakTag);
+
+$('#adds').on('pageshow', function(){
+	//getData();
+
+});
+
+
+var getDatas = function(){
 	
-	var deleteLink = document.createElement("a");
-	deleteLink.href = "#";
-	deleteLink.key = key;
-	var deleteText = "Delete Item";
-	deleteLink.addEventListener("click", deleteItem);
-	deleteLink.innerHTML = deleteText;
-	linksLi.append(deleteLink);
+	var appendLocation = $('#remoteList').html('');
+	var ajaxURL = "asdproject/all";
 
-} 
+	
+	$.couch.db('asdproject').view(ajaxURL, {
+		success: function(data){
+			console.log(data);
+			$.each(data.rows, function(index, names){
+				var makeEntry = $('<div>')
+					.attr('data-role', 'collapsible')
+					.attr('data-mini', 'true')
+					.attr('id', names.key)
+					.appendTo(appendLocation)
+				;
+				
+				var makeH3 = $('<h3>')
+					.html(names.value.name)
+					.appendTo(makeEntry)
+				;
+				
+				var makeDetailsList = $('<ul>').appendTo(makeEntry);
+				var labelCounter = 0;
+				for (var k in names.value) {
+					var makeLi = $('<li>')
+						.appendTo(makeDetailsList)
+					;
 
-// Delete single item
-  function deleteItem() {
- 		if(confirm("Delete Item?")){
- 			localStorage.removeItem(this.key);
-			window.location.reload();
-			alert("Item deleted!");
-		}else{
-		alert("Nothing happen");
-	}
-}
+				}
+				
+			// create edit/delete buttons for each entry
+			   var buttonHolder = $('<div>').attr('class', 'ui-grid-a').appendTo(makeEntry);
+				var editButtonDiv = $('<div>').attr('class', 'ui-block-a').appendTo(buttonHolder);
+				var removeButtonDiv = $('<div>').attr('class', 'ui-block-b').appendTo(buttonHolder);
+				
+				var editButton = $('<a>')
+					.attr('data-role', 'button')
+					.attr('href', '#display')
+					.html('Edit')
+					.data('key', names.key[0])
+					.data('rev', names.key[1])
+					.appendTo(editButtonDiv)
+					.on('click', editItem)	
+				;
+				
+				var removeButton = $('<a>')
+					.attr('data-role', 'button')
+					.attr('href', '#')
+					.html('Remove')
+					.data('key', names.key[0])
+					.data('rev', names.key[1])
+					.appendTo(removeButtonDiv)
+					.on('click', removeItem)
+				;  
+				console.log(names.key[0]);
+				console.log(names.key[1]);
+				$(makeEntry).trigger('create');
+			});
+			$(appendLocation).trigger('create');
+		}
+	});
+};
+
 
 //Edit Item
 function editItem(key) {
 	var value = localStorage.getItem(key);
 	var item = JSON.parse(value);
 	
-	$('#fullname').val(item.fullname[1]);
+	$('#name').val(item.name[1]);
 	$('#email').val(item.email[1]);
 	$('#concerns').val(item.concerns[1]);
 }
 
-	//Clear localStroage
-	$("#clearLocal").on("click", function(){
-		if(localStorage.length === 0){
-			alert("Data empty!");
-		} else {
-			if(confirm("Data will be deleted! Click OK to continue, or CANCEL!")){
-				localStorage.clear();
-				alert("Data cleared!");
+
+
+
+function removeItem(data) {
+	
+	var doc = {};
+		doc._id = $(this).data('id');
+		doc._rev = $(this).data('rev');
+	console.log(doc);
+	if(confirm("Are you sure you want to delete item?")){
+		$.couch.db("asdproject").removeDoc(doc, {
+			success: function(data) {
+				alert("Items deleted!");
 				window.location.reload();
 			}
+		});
+	}
+
+}; 
+
+
+//StoreData
+var storeData = function(data){
+	var key = $('#saveForm').data('key');
+	var rev = $('#saveForm').data('rev');
+	//console.log(key);
+	//console.log(rev);
+	var items = {};
+
+	if (rev) {		// updating existing document
+		items._id = key;
+		items._rev = rev;
+	}
+
+	items.name = data[0].value;
+	items.email = data[1].value;
+	items.concerns = data[2].value;
+	
+	console.log(items);
+	
+	$.couch.db('asdproject').saveDoc(items, {
+		success: function(items){
+			alert('Items Saved to Remote Database!');
+			//resetForm();
+			$('#saveForm').attr('value', 'Add Data')//.removeData('key').removeData('rev');
+			//$.mobile.changePage('#home');
 		}
 	});
-	
-	//Refresh
-	function refresh(){
-		window.location.reload();
-	}
-		$('#refresh').on('click', function() {
-		refresh();
-	
-	});
-	
-
-	$('#displayData').on('click', function() {
-		getData();
-	
-	});
-	
-	$('#submit').on('click', function() {
-		storeData();
-		//window.location.reload();
-		
-	});
-
-});
-
-
+}; 
 
 
 
