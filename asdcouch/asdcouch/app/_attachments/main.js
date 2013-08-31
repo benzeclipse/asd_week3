@@ -1,4 +1,5 @@
 
+
 $(document).on('pageinit', '#home', function(){
 	localStorage.clear();
 	var entry = function(item){
@@ -15,8 +16,10 @@ $(document).on('pageinit', '#home', function(){
 			  		        '<li>' + '<a href="#addItem" class="edit" data-id="'+item.id+'" data-rev="'+item.rev+'">' + 'Edit' + '</a>' + '</li>')
 		return buttonLinks;
 	}
-			
-	$.couch.db("asdproject").view("asdproject/user", {
+		
+
+	
+	$.couch.db("dbtesting").view("asdproject/user", {
 		success: function(data){
 		$('#ticketList').empty();
 		$.each(data.rows, function(index, tick){
@@ -27,6 +30,8 @@ $(document).on('pageinit', '#home', function(){
 		}
 	});
 	
+
+
 //Create
 $(document).on('pageinit', '#addItem', function(){
 	if(localStorage.length == 1){
@@ -36,7 +41,7 @@ $(document).on('pageinit', '#addItem', function(){
 			doc._id  = obj._id;
 			doc._rev = obj._rev;
 		var edit = true;
-		$.couch.db("asdproject").openDoc(doc._id, {
+		$.couch.db("dbtesting").openDoc(doc._id, {
 			success : function(data){
 				console.log(data);
 				$('#name').val(data.name);
@@ -49,6 +54,7 @@ $(document).on('pageinit', '#addItem', function(){
 		var edit = false;
 	}
 	
+
 	$('#save').on("click", function(){
 		var id = Math.floor(Math.random()*10000000001);
 		var data              = $("#addform").serializeArray();
@@ -63,12 +69,12 @@ $(document).on('pageinit', '#addItem', function(){
 		} else {
 			$('#error').addClass('hidden');
 			if (edit == true){
-				$.couch.db("asdproject").removeDoc(doc, {
+				$.couch.db("dbtesting").removeDoc(doc, {
 					success: function(data) {
 					}
 				});	
 			};
-			$.couch.db("asdproject").saveDoc(tickets, {
+			$.couch.db("dbtesting").saveDoc(tickets, {
 				success: function(data) {
 					alert("Ticket Info saved!");
 					window.location = "index.html";
@@ -81,6 +87,8 @@ $(document).on('pageinit', '#addItem', function(){
 	});
 });
 
+
+
 //Delete	
 $('body').on('click', '.delete', function(data){
 	var doc = {};
@@ -88,7 +96,7 @@ $('body').on('click', '.delete', function(data){
 		doc._rev = $(this).data('rev');
 	console.log(doc);
 	if(confirm("Are you sure you want to delete item?")){
-		$.couch.db("asdproject").removeDoc(doc, {  
+		$.couch.db("dbtesting").removeDoc(doc, {  
 			success: function(data) {
 				alert("Item deleted!");
 				window.location.reload();
@@ -96,6 +104,7 @@ $('body').on('click', '.delete', function(data){
 		});
 	}
 });
+
 
 //Edit
 $('body').on("click", '.edit', function(){
@@ -107,10 +116,11 @@ $('body').on("click", '.edit', function(){
 		console.log(localStorage);
 });
 	
+
 //Create Button
 $('body').on("click", '.create', function(){
 
-	});
+});
 });
 
 
