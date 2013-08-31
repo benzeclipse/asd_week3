@@ -1,0 +1,12 @@
+{
+  "env": {
+    "local": {
+      "db": "http://127.0.0.1:5984/dbtesting"
+    },
+      "cloudant": {
+      "db": "https://feencereadyindshustracir:PssGUJ3YGn6RgOLBmPo2BsHD@benz76.cloudant.com/benz76"
+    }
+  }
+}
+
+
